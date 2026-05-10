@@ -1,18 +1,23 @@
 #pragma once
+#include "ticket.hpp"
 
 class SinglyLinkedList {
 public:
     SinglyLinkedList();
     ~SinglyLinkedList();
 
-    void push_front(int value);
+    void addBack(const Ticket& ticket);
+    bool removeFront(Ticket& out);
+    bool findById(int id, Ticket& out) const;
+    bool isEmpty() const;
     void print() const;
 
 private:
     struct Node {
-        int data;
+        Ticket data;
         Node* next;
     };
 
     Node* head;
+    Node* tail;
 };

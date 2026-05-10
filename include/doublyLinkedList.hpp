@@ -1,16 +1,18 @@
 #pragma once
+#include <string>
+using namespace std;
 
 class DoublyLinkedList {
 public:
     DoublyLinkedList();
     ~DoublyLinkedList();
 
-    void push_front(int value);
+    void push_front(const string& operation);
     void print() const;
 
 private:
     struct Node {
-        int data;
+        string operation;
         Node* next;
         Node* prev;
     };
