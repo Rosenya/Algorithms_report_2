@@ -70,6 +70,28 @@ bool SinglyLinkedList::findById(int id, Ticket& out) const {
     return false;
 }
 
+void SinglyLinkedList::removeById(int id) {
+    if (!head) return;
+
+    if (head->data.id == id) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        return;
+    }
+
+    Node* current = head;
+    while (current->next) {
+        if (current->next->data.id == id) {
+            Node* temp = current->next;
+            current->next = current->next->next;
+            delete temp;
+            return;
+        }
+        current = current->next;
+    }
+}
+
 bool SinglyLinkedList::isEmpty() const
 {
     return head == nullptr;

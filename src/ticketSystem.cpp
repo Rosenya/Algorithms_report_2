@@ -16,10 +16,11 @@ void TicketSystem::addIncident(int choice) {
 void TicketSystem::solveNext() {
     Ticket t;
     if (queue.dequeue(t)) {
+        index.remove(t.id);
         history.push_front("ROZWIAZANO: " + t.name + " (ID: " + to_string(t.id) + ")");
         cout << ">> Przetworzono: " << t.name << " (ID: " << t.id << ")\n";
     } else {
-        cout << ">> Info: Kolejka jest pusta.\n";
+        cout << "!! Blad: Kolejka jest pusta.\n";
     }
 }
 

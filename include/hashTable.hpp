@@ -5,6 +5,7 @@ class HashTable {
 public:
     void insert(const Ticket& ticket);
     bool find(int id, Ticket& out) const;
+    void remove(int id);
 private:
     static const int SIZE = 13;
     SinglyLinkedList table[SIZE];

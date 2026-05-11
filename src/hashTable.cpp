@@ -14,3 +14,8 @@ bool HashTable::find(int id, Ticket& out) const {
     int index = hashFunction(id);
     return table[index].findById(id, out);
 }
+
+void HashTable::remove(int id) {
+    int index = hashFunction(id);
+    table[index].removeById(id);
+}

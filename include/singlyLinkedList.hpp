@@ -9,6 +9,7 @@ public:
     void insertSorted(const Ticket& ticket);
     bool removeFront(Ticket& out);
     bool findById(int id, Ticket& out) const;
+    void removeById(int id);
     bool isEmpty() const;
     void print() const;
 
