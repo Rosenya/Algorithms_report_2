@@ -1,118 +1,96 @@
 #include "../include/singlyLinkedList.hpp"
 #include <iostream>
 
-SinglyLinkedList::SinglyLinkedList()
-{
-    head = nullptr;
-    tail = nullptr;
-}
+SinglyLinkedList::SinglyLinkedList() : head(nullptr) {}
 
-SinglyLinkedList::~SinglyLinkedList()
-{
-    Node* current = head;
-
-    while (current)
-    {
-        Node* temp = current;
-        current = current->next;
+SinglyLinkedList::~SinglyLinkedList() {
+    while (head != nullptr) {
+        Node* temp = head;
+        head = head->next;
         delete temp;
     }
-
-    head = nullptr;
-    tail = nullptr;
 }
 
-void SinglyLinkedList::insertSorted(const Ticket& data)
-{
-    Node* newNode = new Node{data, nullptr};
+void SinglyLinkedList::add(Ticket t) {
+    Node* newNode = new Node(t);
+    if (head == nullptr) {
+        head = newNode;
+    } else {
+        Node* temp = head;
+        while (temp->next != nullptr) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+}
 
-    if (head == nullptr || data.priority > head->data.priority)
-    {
+void SinglyLinkedList::insertSorted(Ticket t) {
+    Node* newNode = new Node(t);
+    if (head == nullptr || t.priority > head->data.priority) {
         newNode->next = head;
         head = newNode;
-        return;
-    }
-
-    Node* current = head;
-    while (current->next != nullptr && current->next->data.priority >= data.priority)
-    {
-        current = current->next;
-    }
-
-    newNode->next = current->next;
-    current->next = newNode;
-}
-
-bool SinglyLinkedList::removeFront(Ticket& out)
-{
-    if (!head) return false;
-
-    Node* temp = head;
-    out = head->data;
-    head = head->next;
-
-    if (!head)
-        tail = nullptr;
-
-    delete temp;
-    return true;
-}
-
-bool SinglyLinkedList::findById(int id, Ticket& out) const {
-    Node* current = head;
-    while (current) {
-        if (current->data.id == id) {
-            out = current->data;
-            return true;
+    } else {
+        Node* current = head;
+        while (current->next != nullptr && current->next->data.priority >= t.priority) {
+            current = current->next;
         }
-        current = current->next;
+        newNode->next = current->next;
+        current->next = newNode;
     }
-    return false;
 }
 
 void SinglyLinkedList::removeById(int id) {
-    if (!head) return;
-
+    if (head == nullptr) return;
     if (head->data.id == id) {
         Node* temp = head;
         head = head->next;
         delete temp;
         return;
     }
-
     Node* current = head;
-    while (current->next) {
-        if (current->next->data.id == id) {
-            Node* temp = current->next;
-            current->next = current->next->next;
-            delete temp;
-            return;
-        }
+    while (current->next != nullptr && current->next->data.id != id) {
         current = current->next;
+    }
+    if (current->next != nullptr) {
+        Node* temp = current->next;
+        current->next = current->next->next;
+        delete temp;
     }
 }
 
-bool SinglyLinkedList::isEmpty() const
-{
+Ticket* SinglyLinkedList::find(int id) {
+    Node* temp = head;
+    while (temp != nullptr) {
+        if (temp->data.id == id) {
+            return &(temp->data);
+        }
+        temp = temp->next;
+    }
+    return nullptr;
+}
+
+void SinglyLinkedList::display() {
+    Node* temp = head;
+    while (temp != nullptr) {
+        std::cout << "ID: " << temp->data.id << " | " << temp->data.name 
+                  << " | Prio: " << temp->data.priority << std::endl;
+        temp = temp->next;
+    }
+}
+
+bool SinglyLinkedList::isEmpty() {
     return head == nullptr;
 }
 
-void SinglyLinkedList::print() const {
-    if (head == nullptr) {
-        cout << "(kolejka jest pusta)" << endl;
-        return;
-    }
+Ticket* SinglyLinkedList::getHeadData() {
+    if (head != nullptr) return &(head->data);
+    return nullptr;
+}
 
-    Node* current = head;
-    while (current != nullptr) {
-        cout << "[ID: " << current->data.id << "] " 
-             << current->data.name 
-             << " (Priorytet: " << current->data.priority << ")";
-        
-        if (current->next != nullptr) {
-            cout << "\n  V\n";
-        }
-        current = current->next;
+void SinglyLinkedList::removeFirst() {
+    if (head != nullptr) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
     }
-    cout << endl;
 }

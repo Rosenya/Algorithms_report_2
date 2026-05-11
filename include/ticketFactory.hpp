@@ -1,17 +1,18 @@
 #pragma once
+
 #include "ticket.hpp"
-#include <vector>
 #include <string>
-#include <iostream>
+#include <vector>
 
 class TicketFactory {
 private:
     int nextId;
-    const vector<string> names;
-    const vector<int> priorities;
+    std::vector<std::string> names;
+    std::vector<int> priorities;
 
 public:
     TicketFactory();
-    Ticket create(int choice);
-    void displayOptions() const;
+    Ticket createTicket(int typeIndex, int id);
+    void listTypes();
+    int getTypesCount();
 };

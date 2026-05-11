@@ -57,7 +57,8 @@ void Menu::run()
         {
         case 0:
         {
-            cout << "Zamykanie systemu...\n" << endl;
+            cout << "Zamykanie systemu...\n"
+                 << endl;
             running = false;
             break;
         }
@@ -78,14 +79,14 @@ void Menu::run()
             cout << "Wybor: ";
             int typeChoice = getIntInput();
 
-            if (typeChoice < 1 || typeChoice > 8)
+            if (typeChoice < 0 || typeChoice > 7)
             {
                 cout << "!! Blad: Nieprawidlowa kategoria.\n";
             }
             else
             {
                 auto start = chrono::high_resolution_clock::now();
-                system.addIncident(typeChoice - 1);
+                system.push(typeChoice);
                 auto end = chrono::high_resolution_clock::now();
                 auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
                 cout << ">> Czas operacji: " << duration.count() << " us" << endl;
@@ -96,7 +97,7 @@ void Menu::run()
         case 3:
         {
             auto start = chrono::high_resolution_clock::now();
-            system.solveNext();
+            system.pop();
             auto end = chrono::high_resolution_clock::now();
             auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
             cout << ">> Czas operacji: " << duration.count() << " us" << endl;
@@ -138,7 +139,7 @@ void Menu::run()
             cout << "Podaj ID: ";
             int searchId = getIntInput();
             auto start = chrono::high_resolution_clock::now();
-            system.findTicket(searchId);
+            system.search(searchId);
             auto end = chrono::high_resolution_clock::now();
             auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
             cout << ">> Czas operacji: " << duration.count() << " us" << endl;
@@ -149,16 +150,17 @@ void Menu::run()
         {
             cout << "Liczba zgloszen (1: 50, 2: 100, 3: 1000): ";
             int amountChoice = getIntInput();
-            int n = (amountChoice == 1) ? 50 : (amountChoice == 2) ? 100 : 1000;
+            int n = (amountChoice == 1) ? 50 : (amountChoice == 2) ? 100
+                                                                   : 1000;
 
             auto start = chrono::high_resolution_clock::now();
             for (int i = 0; i < n; i++)
             {
-                system.addIncident(i % 8);
+                system.push(i % 8);
             }
             auto end = chrono::high_resolution_clock::now();
-            auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
-            cout << ">> Wygenerowano " << n << " zgloszen w czasie: " << duration.count() << " ms" << endl;
+            auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+            cout << ">> Wygenerowano " << n << " zgloszen w czasie: " << duration.count() << " us" << endl;
             break;
         }
 

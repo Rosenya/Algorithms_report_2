@@ -1,27 +1,29 @@
 #include "../include/stack.hpp"
+#include <iostream>
 
-Stack::Stack() : top(nullptr) {}
-
-Stack::~Stack() {
-    Ticket temp;
-    while (pop(temp));
+void Stack::push(std::string action) {
+    data.push_back(action);
 }
 
-void Stack::push(const Ticket& ticket) {
-    Node* newNode = new Node{ticket, top};
-    top = newNode;
+std::string Stack::pop() {
+    if (data.empty()) {
+        return "";
+    }
+    std::string last = data.back();
+    data.pop_back();
+    return last;
 }
 
-bool Stack::pop(Ticket& out) {
-    if (isEmpty()) return false;
-    
-    Node* temp = top;
-    out = top->data;
-    top = top->next;
-    delete temp;
-    return true;
+void Stack::display() {
+    if (data.empty()) {
+        std::cout << "Historia jest pusta." << std::endl;
+        return;
+    }
+    for (int i = static_cast<int>(data.size()) - 1; i >= 0; --i) {
+        std::cout << "- " << data[i] << std::endl;
+    }
 }
 
-bool Stack::isEmpty() const {
-    return top == nullptr;
+bool Stack::isEmpty() {
+    return data.empty();
 }

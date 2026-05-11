@@ -1,13 +1,16 @@
 #pragma once
+
+#include "ticket.hpp"
 #include "singlyLinkedList.hpp"
 
 class HashTable {
-public:
-    void insert(const Ticket& ticket);
-    bool find(int id, Ticket& out) const;
-    void remove(int id);
 private:
-    static const int SIZE = 13;
-    SinglyLinkedList table[SIZE];
-    int hashFunction(int id) const;
+    static const int TABLE_SIZE = 100;
+    SinglyLinkedList table[TABLE_SIZE];
+    int hashFunction(int id);
+
+public:
+    void insert(Ticket ticket);
+    Ticket* search(int id);
+    void remove(int id);
 };

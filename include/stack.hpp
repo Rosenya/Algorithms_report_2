@@ -1,19 +1,15 @@
 #pragma once
-#include "ticket.hpp"
+
+#include <string>
+#include <vector>
 
 class Stack {
 private:
-    struct Node {
-        Ticket data;
-        Node* next;
-    };
-    Node* top;
+    std::vector<std::string> data;
 
 public:
-    Stack();
-    ~Stack();
-
-    void push(const Ticket& ticket);
-    bool pop(Ticket& out);
-    bool isEmpty() const;
+    void push(std::string action);
+    std::string pop();
+    void display();
+    bool isEmpty();
 };

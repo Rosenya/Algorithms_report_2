@@ -1,24 +1,28 @@
 #pragma once
-#include "ticketFactory.hpp"
+
 #include "queue.hpp"
-#include "doublyLinkedList.hpp"
 #include "hashTable.hpp"
 #include "stack.hpp"
+#include "ticketFactory.hpp"
+#include <string>
 
 class TicketSystem {
 private:
-    TicketFactory factory;
-    Queue queue;
-    DoublyLinkedList history;
+    Queue priorityQueue;
     HashTable index;
-    Stack undoStack;
+    Stack history;
+    TicketFactory factory;
+    int nextId;
 
 public:
-    void addIncident(int choice);
-    void solveNext();
+    TicketSystem();
+    void push(int typeIndex);
+    void pop();
+    void enqueue(int typeIndex);
+    void dequeue();
+    void search(int id);
     void undo();
-    void findTicket(int id);
-    void showStatus() const;
-    void showHistory() const;
-    void listTypes() const;
+    void listTypes();
+    void showStatus();
+    void showHistory();
 };

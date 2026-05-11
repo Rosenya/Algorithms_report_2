@@ -1,16 +1,17 @@
 #include "../include/ticketFactory.hpp"
+#include <iostream>
 
 TicketFactory::TicketFactory() 
     : nextId(1), 
       names({
-          "Phishing",                   // 0
-          "Vulnerability scan",         // 1
-          "Malware outbreak",           // 2
-          "Password spray",             // 3
-          "Brute force",                // 4
-          "Logic bomb",                 // 5
-          "Account compromise",         // 6
-          "SQL injection"               // 7
+          "Phishing",             // 0
+          "Vulnerability scan",   // 1
+          "Malware outbreak",     // 2
+          "Password spray",       // 3
+          "Brute force",          // 4
+          "Logic bomb",           // 5
+          "Account compromise",   // 6
+          "SQL injection"         // 7
       }),
       priorities({
           1, // Phishing (Medium)
@@ -23,20 +24,27 @@ TicketFactory::TicketFactory()
           3  // SQL injection (Critical)
       }) {}
 
-Ticket TicketFactory::create(int choice) {
+Ticket TicketFactory::createTicket(int typeIndex, int id) {
     Ticket t;
-    t.id = nextId++;
-    
-    size_t index = choice % names.size(); 
-    
-    t.name = names[index];
-    t.priority = priorities[index];
+    t.id = id;
+    if (typeIndex >= 0 && typeIndex < (int)names.size()) {
+        t.name = names[typeIndex];
+        t.priority = priorities[typeIndex];
+    } else {
+        t.name = "Unknown Incident";
+        t.priority = 0;
+    }
     return t;
 }
 
-void TicketFactory::displayOptions() const {
-    std::cout << "--- Wybierz typ incydentu ---\n";
-    for(size_t i = 0; i < names.size(); i++) {
-        std::cout << i + 1 << ". " << names[i] << " (Priorytet: " << priorities[i] << ")\n";
+void TicketFactory::listTypes() {
+    std::cout << "\n--- DOSTEPNE TYPY INCYDENTOW ---" << std::endl;
+    for (int i = 0; i < (int)names.size(); ++i) {
+        std::cout << i << ". " << names[i] 
+                  << " (Priorytet: " << priorities[i] << ")" << std::endl;
     }
+}
+
+int TicketFactory::getTypesCount() {
+    return (int)names.size();
 }

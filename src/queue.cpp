@@ -1,20 +1,29 @@
 #include "../include/queue.hpp"
 
-void Queue::enqueue(const Ticket& ticket)
-{
-    list.insertSorted(ticket);
+void Queue::enqueue(Ticket t) {
+    list.add(t);
 }
 
-bool Queue::dequeue(Ticket& out)
-{
-    return list.removeFront(out);
+void Queue::push(Ticket t) {
+    list.insertSorted(t);
 }
 
-bool Queue::isEmpty() const { 
-    return list.isEmpty(); 
+void Queue::insertSorted(Ticket t) {
+    list.insertSorted(t);
 }
 
-void Queue::print() const
-{
-    list.print();
+void Queue::dequeue() {
+    list.removeFirst();
+}
+
+Ticket* Queue::peek() {
+    return list.getHeadData();
+}
+
+void Queue::display() {
+    list.display();
+}
+
+bool Queue::isEmpty() {
+    return list.isEmpty();
 }
