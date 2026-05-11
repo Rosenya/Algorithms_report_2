@@ -22,18 +22,25 @@ SinglyLinkedList::~SinglyLinkedList()
     tail = nullptr;
 }
 
-void SinglyLinkedList::addBack(const Ticket& ticket)
+void SinglyLinkedList::insertSorted(const Ticket& data)
 {
-    Node* newNode = new Node{ticket, nullptr};
+    Node* newNode = new Node{data, nullptr};
 
-    if (!head)
+    if (head == nullptr || data.priority > head->data.priority)
     {
-        head = tail = newNode;
+        newNode->next = head;
+        head = newNode;
         return;
     }
 
-    tail->next = newNode;
-    tail = newNode;
+    Node* current = head;
+    while (current->next != nullptr && current->next->data.priority >= data.priority)
+    {
+        current = current->next;
+    }
+
+    newNode->next = current->next;
+    current->next = newNode;
 }
 
 bool SinglyLinkedList::removeFront(Ticket& out)
@@ -68,15 +75,22 @@ bool SinglyLinkedList::isEmpty() const
     return head == nullptr;
 }
 
-void SinglyLinkedList::print() const
-{
-    Node* current = head;
-
-    while (current)
-    {
-        std::cout << current->data.id << " -> ";
-        current = current->next;
+void SinglyLinkedList::print() const {
+    if (head == nullptr) {
+        cout << "(kolejka jest pusta)" << endl;
+        return;
     }
 
-    std::cout << "nullptr\n";
+    Node* current = head;
+    while (current != nullptr) {
+        cout << "[ID: " << current->data.id << "] " 
+             << current->data.name 
+             << " (Priorytet: " << current->data.priority << ")";
+        
+        if (current->next != nullptr) {
+            cout << "\n  V\n";
+        }
+        current = current->next;
+    }
+    cout << endl;
 }

@@ -37,6 +37,6 @@ Ticket TicketFactory::create(int choice) {
 void TicketFactory::displayOptions() const {
     std::cout << "--- Wybierz typ incydentu ---\n";
     for(size_t i = 0; i < names.size(); i++) {
-        std::cout << i << ". " << names[i] << " (Priorytet: " << priorities[i] << ")\n";
+        std::cout << i + 1 << ". " << names[i] << " (Priorytet: " << priorities[i] << ")\n";
     }
 }

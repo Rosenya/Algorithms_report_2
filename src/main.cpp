@@ -1,9 +1,11 @@
-#include <iostream>
-#include <string>
-using namespace std;
+#include "../include/ticketSystem.hpp"
+#include "../include/menu.hpp"
 
-int main()
-{
- 
+int main() {
+    TicketSystem engine;
+    Menu gui(engine);
+    
+    gui.run();
+    
     return 0;
 }

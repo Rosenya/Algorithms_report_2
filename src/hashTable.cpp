@@ -7,7 +7,7 @@ int HashTable::hashFunction(int id) const {
 void HashTable::insert(const Ticket& ticket) {
     int index = hashFunction(ticket.id);
    
-    table[index].addBack(ticket);
+    table[index].insertSorted(ticket);
 }
 
 bool HashTable::find(int id, Ticket& out) const {

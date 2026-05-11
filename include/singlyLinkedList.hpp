@@ -6,7 +6,7 @@ public:
     SinglyLinkedList();
     ~SinglyLinkedList();
 
-    void addBack(const Ticket& ticket);
+    void insertSorted(const Ticket& ticket);
     bool removeFront(Ticket& out);
     bool findById(int id, Ticket& out) const;
     bool isEmpty() const;

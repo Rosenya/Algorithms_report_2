@@ -2,7 +2,7 @@
 
 void Queue::enqueue(const Ticket& ticket)
 {
-    list.addBack(ticket);
+    list.insertSorted(ticket);
 }
 
 bool Queue::dequeue(Ticket& out)
